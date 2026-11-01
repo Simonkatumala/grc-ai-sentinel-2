@@ -89,4 +89,66 @@ function analyze(){
 }
 document.getElementById('analyze').addEventListener('click',analyze);
 analyze();
-</script></body></html>
+</script>
+<!-- GRC-AI SENTINEL COPILOT -->
+<section id="sentinel-copilot" style="margin:30px auto;padding:25px;max-width:1100px;background:#101d32;color:#fff;border:1px solid #294365;border-radius:14px;font-family:Arial,sans-serif;">
+  <h2 style="color:#62c5ff;margin-top:0;">🤖 Sentinel Copilot</h2>
+  <p style="color:#b8c9dc;">AI-powered SAP GRC guidance prototype | Rule-based demo</p>
+
+  <div style="background:#192b45;padding:18px;border-radius:10px;margin:18px 0;">
+    <strong>Ask your GRC question</strong>
+    <input id="sentinel-question" type="text" placeholder="Example: What is a Segregation of Duties risk?"
+      style="display:block;box-sizing:border-box;width:100%;padding:13px;margin-top:12px;border-radius:7px;border:1px solid #54708e;background:#0c1728;color:white;">
+    <button onclick="sentinelAsk()" style="margin-top:12px;padding:11px 22px;background:#168bd0;color:white;border:0;border-radius:7px;cursor:pointer;font-weight:bold;">
+      Analyze Question
+    </button>
+  </div>
+
+  <div id="sentinel-answer" role="status" aria-live="polite"
+    style="min-height:90px;background:#0c1728;border:1px solid #294365;border-radius:9px;padding:18px;color:#dcecff;">
+    Your GRC guidance will appear here.
+  </div>
+
+  <p style="font-size:12px;color:#91a8c2;margin-bottom:0;">
+    Demonstration only. Responses use predefined rules and examples, not a live AI model or SAP system.
+  </p>
+</section>
+
+<script>
+function sentinelAsk() {
+  const input = document.getElementById("sentinel-question");
+  const output = document.getElementById("sentinel-answer");
+  const question = input.value.trim().toLowerCase();
+
+  if (!question) {
+    output.textContent = "Please enter a GRC question first.";
+    return;
+  }
+
+  let answer = "";
+
+  if (question.includes("sod") || question.includes("segregation")) {
+    answer = "SoD Risk: Segregation of Duties occurs when one user has access to conflicting activities, such as vendor creation and payment processing. Review the assigned roles, check the applicable SoD rules, and obtain approval or mitigation before granting access.";
+  } else if (question.includes("firefighter") || question.includes("emergency")) {
+    answer = "Emergency Access: Firefighter access should be temporary, approved, monitored and reviewed. Check the reason for access, activity logs, reviewer comments and timely removal.";
+  } else if (question.includes("least privilege") || question.includes("role")) {
+    answer = "Least Privilege: Give users only the access needed for their job. Review role permissions, remove unnecessary access and validate that no conflicting permissions are assigned.";
+  } else if (question.includes("su53") || question.includes("authorization")) {
+    answer = "Authorization Troubleshooting: Start with SU53 to review the latest authorization failure. If further investigation is required, use an appropriate trace such as ST01, review the missing authorization object and coordinate a controlled role correction and retest.";
+  } else if (question.includes("audit")) {
+    answer = "Audit Review: Maintain access request approvals, role assignment records, SoD risk assessments, emergency access logs and evidence of periodic access reviews.";
+  } else if (question.includes("access request") || question.includes("request")) {
+    answer = "Access Request Review: Validate the business justification, requested role, manager approval and potential SoD conflicts. Grant only approved access and retain review evidence.";
+  } else {
+    answer = "GRC Guidance: Review the user's business requirement, assigned roles, authorization scope and applicable SoD rules. Validate the risk with your organization's SAP GRC policy before making an access decision. Try asking about SoD, Firefighter, roles, SU53, authorization or audit.";
+  }
+
+  output.textContent = answer;
+}
+
+document.getElementById("sentinel-question").addEventListener("keydown", function(event) {
+  if (event.key === "Enter") sentinelAsk();
+});
+</script>
+<!-- END SENTINEL COPILOT -->
+</body></html>
